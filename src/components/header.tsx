@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 // import logo1 from "../../assets/general/Logo-3.png";
 import {
-  FaSearch,
+
   FaShoppingBag,
   FaSignInAlt,
   FaUser,

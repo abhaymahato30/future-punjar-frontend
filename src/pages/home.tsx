@@ -19,7 +19,7 @@ const Home = () => {
     isError: productIsError,
     error: productError,
   } = useSearchProductsQuery({
-    search,
+    search
   });
 
   const dispatch = useDispatch();
