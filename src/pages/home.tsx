@@ -10,10 +10,6 @@ import { useDispatch } from "react-redux";
 
 const Home = () => {
   const [search, setSearch] = useState("");
-  const [price, setPrice] = useState<string>(""); // Initially as a string
-  
-  // Ensure price is always a number, default to 0 if empty or invalid
-  const parsedPrice = price ? parseFloat(price) : 0;
   
   const {
     isLoading: productLoading,
@@ -22,9 +18,9 @@ const Home = () => {
     error: productError,
   } = useSearchProductsQuery({
     search,
-    page: 1, // Number type
+    page: 1,
     category: "",
-    price: parsedPrice, // Now passing number, never undefined
+    price: 0,  // Removed price filter as per your request
     sort: "asc",
   });
 
