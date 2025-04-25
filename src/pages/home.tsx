@@ -18,9 +18,7 @@ const Home = () => {
     data: searchedData,
     isError: productIsError,
     error: productError,
-  } = useSearchProductsQuery({
-    search
-  });
+  } = useSearchProductsQuery(search);
 
   const dispatch = useDispatch();
 
