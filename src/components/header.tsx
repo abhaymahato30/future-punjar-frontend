@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-// import logo1 from "../../assets/general/Logo-3.png";
 import {
-
   FaShoppingBag,
   FaSignInAlt,
   FaUser,
@@ -33,7 +31,7 @@ const Header = ({ user }: PropsType) => {
     }
   };
 
-  const navLinkStyle = (path: string) => ({
+  const navLinkStyle = (path: string): React.CSSProperties => ({
     fontSize: "1.125rem",
     fontWeight: 500,
     fontFamily: "sans-serif",
@@ -101,16 +99,23 @@ const Header = ({ user }: PropsType) => {
           {/* Logo with Link to Home */}
           <Link to="/" style={{ textDecoration: "none" }}>
             <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-            <img
-          src="https://res.cloudinary.com/duzo8q4gg/image/upload/v1738263106/Logo-3_av9fsj.png"
-          alt="Logo"
-         style={{ width: "128px", height: "80px" }}
-          />
+              <img
+                src="https://res.cloudinary.com/duzo8q4gg/image/upload/v1738263106/Logo-3_av9fsj.png"
+                alt="Logo"
+                style={{ width: "128px", height: "80px" }}
+              />
             </div>
           </Link>
 
           {/* Desktop Navigation */}
-          <div style={{ display: "none", gap: "48px", fontSize: "1.125rem", fontWeight: 500, fontFamily: "sans-serif", textTransform: "uppercase" }}>
+          <div style={{
+            display: "none",
+            gap: "48px",
+            fontSize: "1.125rem",
+            fontWeight: 500,
+            fontFamily: "sans-serif",
+            textTransform: "uppercase"
+          }}>
             {["/", "/about", "/team", "/products", "/review", "/contact"].map((path) => (
               <Link
                 key={path}
@@ -126,16 +131,13 @@ const Header = ({ user }: PropsType) => {
 
           {/* Icons Section */}
           <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
-            {/* <Link to="/search" style={{ color: "white" }}>
-              <FaSearch />
-            </Link> */}
             <Link to="/cart" style={{ color: "white" }}>
               <FaShoppingBag />
             </Link>
-            
+
             {user?._id ? (
               <div style={{ position: "relative" }}>
-                <button 
+                <button
                   onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
                   style={{ color: "white", background: "none", border: "none", cursor: "pointer" }}
                 >
@@ -156,7 +158,7 @@ const Header = ({ user }: PropsType) => {
                     minWidth: "160px"
                   }}>
                     {user.role === "admin" && (
-                      <Link 
+                      <Link
                         to="/admin/dashboard"
                         style={{ color: "#1e293b", textDecoration: "none" }}
                         onClick={() => setIsUserMenuOpen(false)}
@@ -171,7 +173,7 @@ const Header = ({ user }: PropsType) => {
                     >
                       Orders
                     </Link>
-                    <button 
+                    <button
                       onClick={logoutHandler}
                       style={{
                         background: "none",

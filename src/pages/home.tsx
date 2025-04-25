@@ -39,6 +39,7 @@ const Home = () => {
 
   return (
     <div className="product-list-page">
+      {/* Hero Section */}
       <section
         style={{
           position: "relative",
@@ -101,12 +102,31 @@ const Home = () => {
 
       {/* Products Section */}
       <main style={{ padding: "20px" }}>
-        <div style={{ padding: "20px",display:"flex",justifyContent:"center",alignItems:"center" }}>
-        <h1>Our Products</h1>
+        <div
+          style={{
+            padding: "20px",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <h1 style={{ marginBottom: "10px" }}>Our Products</h1>
 
+          <input
+            type="text"
+            placeholder="Search for products..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            style={{
+              padding: "10px 14px",
+              borderRadius: "8px",
+              border: "1px solid #ccc",
+              fontSize: "1rem",
+              width: "300px",
+              outline: "none",
+            }}
+          />
         </div>
-
-     
 
         {/* Show loading skeleton while products are loading */}
         {productLoading ? (
