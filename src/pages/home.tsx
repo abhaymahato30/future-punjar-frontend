@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ProductCard from "../components/product-card";
 import { useSearchProductsQuery } from "../redux/api/productAPI";
 import { CustomError } from "../types/api-types";
@@ -9,31 +9,35 @@ import { addToCart } from "../redux/reducer/cartReducer";
 import { useDispatch } from "react-redux";
 
 const Home = () => {
-  // Search state for product name
   const [search, setSearch] = useState("");
 
-  // Fetch products based on search query
   const {
     isLoading: productLoading,
     data: searchedData,
     isError: productIsError,
     error: productError,
-  } = useSearchProductsQuery(search);
+  } = useSearchProductsQuery({
+    search,
+    page: 1,
+    category: "",
+    price: "",
+    sort: "asc",
+  });
 
   const dispatch = useDispatch();
 
-  // Add product to the cart handler
   const addToCartHandler = (cartItem: CartItem) => {
     if (cartItem.stock < 1) return toast.error("Out of Stock");
     dispatch(addToCart(cartItem));
     toast.success("Added to cart");
   };
 
-  // Handle product error or fetch error
-  if (productIsError) {
-    const err = productError as CustomError;
-    toast.error(err.data.message);
-  }
+  useEffect(() => {
+    if (productIsError) {
+      const err = productError as CustomError;
+      toast.error(err.data.message);
+    }
+  }, [productIsError, productError]);
 
   return (
     <div className="product-list-page">
@@ -58,7 +62,7 @@ const Home = () => {
           style={{
             position: "absolute",
             inset: 0,
-            backgroundColor: "rgba(0, 0, 0, 0.7)", // 70% black overlay
+            backgroundColor: "rgba(0, 0, 0, 0.7)",
           }}
         ></div>
         <div
@@ -126,7 +130,7 @@ const Home = () => {
           />
         </div>
 
-        {/* Show loading skeleton while products are loading */}
+        {/* Loading Skeleton */}
         {productLoading ? (
           <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
             {Array.from({ length: 3 }).map((_, i) => (
@@ -137,7 +141,6 @@ const Home = () => {
             ))}
           </div>
         ) : (
-          // Display products if fetched successfully
           <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
             {searchedData?.products.map((i) => (
               <ProductCard
