@@ -265,3 +265,224 @@
     }
   }
 }
+
+
+// service section
+/* Service Section */
+/* Service Section */
+.service-section {
+  background-color: #f9f9f9;
+  color: #333;
+  padding: 40px 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Heading */
+.section-title {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 40px;
+  color: #111;
+  text-align: center; /* Centering the text */
+}
+
+
+/* Card Container */
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+/* Individual Card */
+.service-card {
+  background-color: #ffffff;
+  width: 300px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Card Image */
+.card-image img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  transition: opacity 0.3s ease;
+}
+
+.service-card:hover .card-image img {
+  opacity: 0.8;
+}
+
+/* Card Content */
+.card-content {
+  padding: 20px;
+  background-color: #f7f7f7;
+}
+
+.card-icon {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.card-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  margin-left: 10px;
+}
+
+.card-description {
+  font-size: 14px;
+  color: #555;
+  margin-top: 10px;
+}
+
+
+
+// training section
+
+/* General Section Styles */
+/* General Section Styles */
+/* General Section Styles */
+.training-section {
+  position: relative;
+  padding: 60px 20px;
+  font-family: Arial, sans-serif;
+  background-image: url("https://images.unsplash.com/photo-1625301840055-7c1b7198cfc0?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+  background-size: cover;
+  background-position: center;
+  color: #fff; /* Default text color */
+}
+
+/* Add dark overlay */
+.training-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Dark overlay with 50% opacity */
+  z-index: 0; /* Make sure the overlay is behind the content */
+}
+
+.container {
+  position: relative; /* Ensure content is above the overlay */
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+  // background-color: rgba(255, 255, 255, 0.8); /* Light background for readability */
+  padding: 40px 20px;
+  border-radius: 10px;
+  z-index: 1; /* Content should be above the overlay */
+}
+
+/* Heading should be above the overlay */
+.section-heading {
+  font-size: 40px;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 40px;
+  z-index: 2; /* Ensure the heading is above the overlay */
+}
+
+/* Card Container Styles */
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+}
+
+/* Card Styles */
+.card {
+  position: relative;
+  width: 300px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  overflow: hidden;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+/* Hover effect */
+.card:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  transform: translateY(-10px);
+}
+
+/* Card Titles and Content */
+.card-title {
+  font-size: 26px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.sticker {
+  background-color: #ff6f61;
+  color: white;
+  padding: 8px 15px;
+  border-radius: 50px;
+  font-size: 18px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.card-description {
+  font-size: 18px;
+  color: #444;
+  margin-bottom: 20px;
+}
+
+/* Info items in the card */
+.card-info {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.card-info-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.info-label {
+  font-size: 20px;
+  margin-right: 10px;
+  color: green;
+}
+
+/* Button Style */
+.apply-btn {
+  background-color: #007bff;
+  color: white;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: background-color 0.3s ease;
+}
+
+.apply-btn:hover {
+  background-color: #0056b3;
+}

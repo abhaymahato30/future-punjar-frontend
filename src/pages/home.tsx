@@ -7,6 +7,7 @@ import { Skeleton } from "../components/loader";
 import { CartItem } from "../types/types";
 import { addToCart } from "../redux/reducer/cartReducer";
 import { useDispatch } from "react-redux";
+import ServiceSection from "../components/service";
 
 const Home = () => {
   const [search, setSearch] = useState("");
@@ -102,6 +103,8 @@ const Home = () => {
         </div>
       </section>
 
+      {/* service section */}
+      <ServiceSection/>
       {/* Products Section */}
       <main style={{ padding: "20px" }}>
         <div
