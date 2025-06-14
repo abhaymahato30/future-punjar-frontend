@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import  { useEffect, useRef } from 'react';
 import light from '../assets/About/light.jpg'
 
 import train from '../assets/About/train.jpg'

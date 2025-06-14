@@ -54,7 +54,7 @@ const Review: React.FC = () => {
   ];
 
   useEffect(() => {
-    reviewRef.current.forEach((el, i) => {
+    reviewRef.current.forEach((el) => {
       if (el) {
         gsap.fromTo(
           el,

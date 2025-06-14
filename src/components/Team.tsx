@@ -5,11 +5,11 @@ import "../styles/team.scss";
 
 // Image imports
 import aditya from "../assets/team/aditya.jpg"
-import manish from "../assets/team/manish.jpg";
-import abhay from "../assets/team/abhay.jpg";
+
+
 import anurag from "../assets/team/anurag.jpg";
 import neha from "../assets/team/neha.jpg";
-import shivanand from "../assets/team/shivanand.jpg";
+
 import vipul from "../assets/advisor/vipul.jpg";
 
 gsap.registerPlugin(ScrollTrigger);

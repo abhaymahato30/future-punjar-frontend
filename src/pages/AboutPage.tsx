@@ -1,5 +1,4 @@
-import React from 'react'
-import { useSpring, animated } from '@react-spring/web';
+import { useSpring } from '@react-spring/web';
 import 'swiper/css';
 import { useRef ,useState} from 'react';
 // import Navbar from '../components/Navbar/Navbar'
@@ -12,7 +11,6 @@ import GalleryComponent from '../components/GalleryComponent'
 
 const AboutPage = () => {
      // Create a reference for Swiper to control the carousel programmatically
-  const swiperRef = useRef(null);
 
   // Animations for sections
 

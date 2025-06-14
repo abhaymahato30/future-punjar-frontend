@@ -1,5 +1,4 @@
 // PolicyPage.jsx
-import React from 'react';
 
 
 const sections = [

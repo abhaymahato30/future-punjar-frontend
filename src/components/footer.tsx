@@ -2,7 +2,7 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFacebook,
-  faTwitter,
+  
   faLinkedin,
 } from "@fortawesome/free-brands-svg-icons";
 import { faInstagram } from "@fortawesome/free-brands-svg-icons/faInstagram";
@@ -41,8 +41,8 @@ const Footer: React.FC = () => {
 
             <RouterLink
               to="/"
-              smooth={true}
-              duration={300}
+            
+              
               className="text-white cursor-pointer block hover:text-blue-200 transition duration-300 ease-in-out transform hover:scale-110"
             >
               Home
@@ -50,8 +50,8 @@ const Footer: React.FC = () => {
 
             <RouterLink
               to="/about"
-              smooth={true}
-              duration={300}
+            
+              
               className="text-white cursor-pointer block hover:text-blue-200 transition duration-300 ease-in-out transform hover:scale-110"
             >
               About
@@ -59,8 +59,8 @@ const Footer: React.FC = () => {
 
             <RouterLink
               to="/team"
-              smooth={true}
-              duration={300}
+            
+              
               className="text-white cursor-pointer block hover:text-blue-200 transition duration-300 ease-in-out transform hover:scale-110"
             >
               Team
@@ -68,8 +68,8 @@ const Footer: React.FC = () => {
 
             <ScrollLink
               to="products"
-              smooth={true}
-              duration={300}
+            
+              
               className="text-white cursor-pointer block hover:text-blue-200 transition duration-300 ease-in-out transform hover:scale-110"
             >
               Products
@@ -84,8 +84,8 @@ const Footer: React.FC = () => {
 
             <RouterLink
               to="/contact"
-              smooth={true}
-              duration={300}
+            
+              
               className="text-white cursor-pointer block hover:text-blue-200 transition duration-300 ease-in-out transform hover:scale-110"
             >
               Contact
