@@ -1,22 +1,17 @@
 import { useSpring } from '@react-spring/web';
 import 'swiper/css';
-import { useRef ,useState} from 'react';
-// import Navbar from '../components/Navbar/Navbar'
-import About  from '../components/About'
-import PastWorks from '../components/Pastworks'
-import Gallery from '../components/Gallery'
-import GalleryComponent from '../components/GalleryComponent'
+import { useState } from 'react';
+import type { Swiper as SwiperClass } from 'swiper/types';
 
-
+import About from '../components/About';
+import PastWorks from '../components/Pastworks';
+import Gallery from '../components/Gallery';
+import GalleryComponent from '../components/GalleryComponent';
 
 const AboutPage = () => {
-     // Create a reference for Swiper to control the carousel programmatically
+  const [swiper, setSwiper] = useState<SwiperClass | null>(null);
 
-  // Animations for sections
-
-  // Function to go to next slide
-  const [swiper, setSwiper] = useState(null);
-
+  // Animation only uses numbers
   const galleryAnimation = useSpring({
     opacity: 1,
     from: { opacity: 0 },
@@ -26,36 +21,22 @@ const AboutPage = () => {
   const goToPrevSlide = () => swiper?.slidePrev();
   const goToNextSlide = () => swiper?.slideNext();
 
-  // gsap
- 
-
-
-
-
-
   return (
     <>
-    {/* <Navbar/>    */}
-    <About/>
-    <PastWorks/>
-    <Gallery/>
-    <section id="gallery" >
-      
-      
-      <GalleryComponent
-           galleryAnimation={galleryAnimation}
-           goToPrevSlide={goToPrevSlide}
-           goToNextSlide={goToNextSlide}
-      
-      
-      />
-         
+      <About />
+      <PastWorks />
+      <Gallery />
 
+      <section id="gallery">
+        <GalleryComponent
+          galleryAnimation={galleryAnimation}
+          goToPrevSlide={goToPrevSlide}
+          goToNextSlide={goToNextSlide}
+          setSwiper={setSwiper}
+        />
       </section>
-
-    
     </>
-  )
-}
+  );
+};
 
-export default AboutPage
+export default AboutPage;

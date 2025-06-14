@@ -1,9 +1,11 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/autoplay';
 import { Autoplay } from 'swiper/modules';
 import { animated, SpringValue } from 'react-spring';
+import type { SwiperRef } from 'swiper/react';
+import type { Swiper as SwiperClass } from 'swiper/types';
 
 import g1 from '../assets/gallery/1.jpg';
 import g2 from '../assets/gallery/2.jpg';
@@ -21,34 +23,26 @@ import g14 from '../assets/gallery/14.jpg';
 import g15 from '../assets/gallery/15.jpg';
 import g16 from '../assets/gallery/16.jpg';
 
-import { Swiper as SwiperClass } from 'swiper/types';
-
-// Define prop types
 interface GalleryComponentProps {
   galleryAnimation: {
-    [key: string]: SpringValue<string | number>;
+    [key: string]: SpringValue<number>; // 👈 fixed the typing here
   };
+  goToPrevSlide: () => void;
+  goToNextSlide: () => void;
+  setSwiper: (swiper: SwiperClass) => void;
 }
 
-const GalleryComponent: React.FC<GalleryComponentProps> = ({ galleryAnimation }) => {
-  const swiperRef = useRef<SwiperClass | null>(null);
-  const [swiperInstance, setSwiperInstance] = useState<SwiperClass | null>(null);
+const GalleryComponent: React.FC<GalleryComponentProps> = ({
+  galleryAnimation,
+  goToPrevSlide,
+  goToNextSlide,
+  setSwiper,
+}) => {
+  const swiperRef = useRef<SwiperRef>(null);
 
   const images: string[] = [
     g1, g2, g3, g4, g5, g7, g8, g9, g10, g11, g12, g13, g14, g15, g16,
   ];
-
-  const onSwiperInit = (swiper: SwiperClass) => {
-    setSwiperInstance(swiper);
-  };
-
-  const goToPrevSlide = () => {
-    swiperInstance?.slidePrev();
-  };
-
-  const goToNextSlide = () => {
-    swiperInstance?.slideNext();
-  };
 
   return (
     <section className="py-16 px-4 bg-white">
@@ -70,7 +64,7 @@ const GalleryComponent: React.FC<GalleryComponentProps> = ({ galleryAnimation })
               delay: 1000,
               disableOnInteraction: false,
             }}
-            onSwiper={onSwiperInit}
+            onSwiper={setSwiper}
             className="my-swiper"
           >
             {images.map((imageUrl, index) => (

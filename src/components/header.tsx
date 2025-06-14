@@ -19,7 +19,6 @@ interface PropsType {
 const Header = ({ user }: PropsType) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
-  const [linkHover, setLinkHover] = useState<string | null>(null);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -30,7 +29,7 @@ const Header = ({ user }: PropsType) => {
       toast.success("Sign Out Successfully");
       setIsUserMenuOpen(false);
     } catch (error) {
-      toast.error("Sign Out Fail");
+      toast.error("Sign Out Failed");
     }
   };
 
@@ -45,34 +44,23 @@ const Header = ({ user }: PropsType) => {
     }
   };
 
-  const navLinkStyle = (path: string): React.CSSProperties => ({
-    fontSize: "1.125rem",
-    fontWeight: 500,
-    fontFamily: "sans-serif",
-    textTransform: "uppercase",
-    letterSpacing: "0.025em",
-    color: linkHover === path ? "#facc15" : "#ffffff",
-    transform: linkHover === path ? "scale(1.05)" : "scale(1)",
-    textDecoration: linkHover === path ? "underline" : "none",
-    transition: "all 0.3s ease",
-    cursor: "pointer",
-  });
-
   return (
     <>
       {/* WhatsApp Banner */}
-      <div style={{
-        backgroundColor: "#eab308",
-        textAlign: "center",
-        padding: "8px 0",
-        color: "white",
-        fontWeight: 500,
-        fontSize: "0.875rem",
-        position: "fixed",
-        top: 0,
-        width: "100%",
-        zIndex: 30
-      }}>
+      <div
+        style={{
+          backgroundColor: "#eab308",
+          textAlign: "center",
+          padding: "8px 0",
+          color: "white",
+          fontWeight: 500,
+          fontSize: "0.875rem",
+          position: "fixed",
+          top: 0,
+          width: "100%",
+          zIndex: 30,
+        }}
+      >
         <a
           href="https://wa.me/9430649460"
           target="_blank"
@@ -83,7 +71,7 @@ const Header = ({ user }: PropsType) => {
             justifyContent: "center",
             gap: "8px",
             color: "white",
-            textDecoration: "none"
+            textDecoration: "none",
           }}
         >
           <FaWhatsapp style={{ fontSize: "1.125rem" }} />
@@ -92,24 +80,28 @@ const Header = ({ user }: PropsType) => {
       </div>
 
       {/* Header */}
-      <header className=" bg-slate-900" style={{
-        position: "fixed",
-        top: "32px",
-        width: "100%",
-        zIndex: 20,
-        boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
-      
-      }}>
-        <nav style={{
-          maxWidth: "1280px",
-          margin: "0 auto",
-          padding: "30px 10px",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          color: "white",
-          height: "100px"
-        }}>
+      <header
+        className="bg-slate-900"
+        style={{
+          position: "fixed",
+          top: "32px",
+          width: "100%",
+          zIndex: 20,
+          boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
+        }}
+      >
+        <nav
+          style={{
+            maxWidth: "1280px",
+            margin: "0 auto",
+            padding: "30px 10px",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            color: "white",
+            height: "100px",
+          }}
+        >
           {/* Logo */}
           <Link to="/" style={{ textDecoration: "none" }}>
             <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
@@ -121,9 +113,6 @@ const Header = ({ user }: PropsType) => {
             </div>
           </Link>
 
-          {/* Desktop Navigation */}
-       
-
           {/* Icons */}
           <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
             <Link to="/cart" style={{ color: "white" }}>
@@ -134,24 +123,31 @@ const Header = ({ user }: PropsType) => {
               <div style={{ position: "relative" }}>
                 <button
                   onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                  style={{ color: "white", background: "none", border: "none", cursor: "pointer" }}
+                  style={{
+                    color: "white",
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                  }}
                 >
                   <FaUser />
                 </button>
                 {isUserMenuOpen && (
-                  <div style={{
-                    position: "absolute",
-                    right: 0,
-                    top: "100%",
-                    backgroundColor: "white",
-                    borderRadius: "4px",
-                    boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-                    padding: "16px",
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "12px",
-                    minWidth: "160px"
-                  }}>
+                  <div
+                    style={{
+                      position: "absolute",
+                      right: 0,
+                      top: "100%",
+                      backgroundColor: "white",
+                      borderRadius: "4px",
+                      boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+                      padding: "16px",
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "12px",
+                      minWidth: "160px",
+                    }}
+                  >
                     {user.role === "admin" && (
                       <Link
                         to="/admin/dashboard"
@@ -177,7 +173,7 @@ const Header = ({ user }: PropsType) => {
                         color: "#1e293b",
                         display: "flex",
                         alignItems: "center",
-                        gap: "8px"
+                        gap: "8px",
                       }}
                     >
                       <FaSignOutAlt /> Sign Out
@@ -198,7 +194,7 @@ const Header = ({ user }: PropsType) => {
                 border: "none",
                 color: "white",
                 display: "block",
-                cursor: "pointer"
+                cursor: "pointer",
               }}
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
@@ -221,26 +217,70 @@ const Header = ({ user }: PropsType) => {
         </nav>
 
         {/* Mobile Menu */}
-       <div style={{
-  position: "fixed",
-  top: "132px", // 32px (WhatsApp banner) + 100px (header)
-  right: isMobileMenuOpen ? "0" : "-250px",
-  width: "250px",
-  height: "100vh",
-  backgroundColor: "#1e293b",
-  padding: "24px",
-  display: "flex",
-  flexDirection: "column",
-  gap: "24px",
-  transition: "left 0.3s ease-in-out",
-  zIndex: 40
-}}>
-          <span onClick={() => { setIsMobileMenuOpen(false); navigate("/"); }} style={navLinkStyle("/")}>Home</span>
-          <span onClick={() => { setIsMobileMenuOpen(false); scrollToSection("products"); }} style={navLinkStyle("/products")}>Products</span>
-          <span onClick={() => { setIsMobileMenuOpen(false); scrollToSection("review"); }} style={navLinkStyle("/review")}>Review</span>
-          <Link to="/about" style={navLinkStyle("/about")} onClick={() => setIsMobileMenuOpen(false)}>About</Link>
-          <Link to="/team" style={navLinkStyle("/team")} onClick={() => setIsMobileMenuOpen(false)}>Team</Link>
-          <Link to="/contact" style={navLinkStyle("/contact")} onClick={() => setIsMobileMenuOpen(false)}>Contact</Link>
+        <div
+          style={{
+            position: "fixed",
+            top: "132px", // WhatsApp (32) + Header (100)
+            right: isMobileMenuOpen ? "0" : "-250px",
+            width: "250px",
+            height: "100vh",
+            backgroundColor: "#1e293b",
+            padding: "24px",
+            display: "flex",
+            flexDirection: "column",
+            gap: "24px",
+            transition: "right 0.3s ease-in-out",
+            zIndex: 40,
+          }}
+        >
+          <span
+            onClick={() => {
+              setIsMobileMenuOpen(false);
+              navigate("/");
+            }}
+            style={{ color: "white", cursor: "pointer" }}
+          >
+            Home
+          </span>
+          <span
+            onClick={() => {
+              setIsMobileMenuOpen(false);
+              scrollToSection("products");
+            }}
+            style={{ color: "white", cursor: "pointer" }}
+          >
+            Products
+          </span>
+          <span
+            onClick={() => {
+              setIsMobileMenuOpen(false);
+              scrollToSection("review");
+            }}
+            style={{ color: "white", cursor: "pointer" }}
+          >
+            Review
+          </span>
+          <Link
+            to="/about"
+            onClick={() => setIsMobileMenuOpen(false)}
+            style={{ color: "white" }}
+          >
+            About
+          </Link>
+          <Link
+            to="/team"
+            onClick={() => setIsMobileMenuOpen(false)}
+            style={{ color: "white" }}
+          >
+            Team
+          </Link>
+          <Link
+            to="/contact"
+            onClick={() => setIsMobileMenuOpen(false)}
+            style={{ color: "white" }}
+          >
+            Contact
+          </Link>
         </div>
       </header>
     </>
