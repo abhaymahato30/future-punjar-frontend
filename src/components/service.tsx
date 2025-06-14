@@ -13,7 +13,7 @@ const services: Service[] = [
     image: 'https://imgs.search.brave.com/u7B48m3c_PwbiG5XBj3Ogr030Ksk3mMcu4_swWiZQpA/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTMz/MTc5NTMyNC9waG90/by9odW1hbi1oYW5k/LXRvdWNoaW5nLXNv/bGFyLXBhbmVsLmpw/Zz9zPTYxMng2MTIm/dz0wJms9MjAmYz1s/Z2ZXMU1veU5mWGNW/WlRQM1JvR0JHMjRj/Wk1TVF9vazJKU3ds/bW05WFhnPQ',
     description: (
       <>
-        🔧 <span className="text-gray-300">
+        🔧 <span className="text-gray-500">
           Smart design & integration of solar systems using high-efficiency panels and inverters.
         </span>
       </>
@@ -25,7 +25,7 @@ const services: Service[] = [
     image: 'https://imgs.search.brave.com/biRJOdsX1Y4S6YyYWI9sIGQJiVUi2fKpHZZNWsVV_Wo/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTQw/NTg4MDI2Ny9waG90/by90d28tZW5naW5l/ZXJzLWluc3RhbGxp/bmctc29sYXItcGFu/ZWxzLW9uLXJvb2Yu/anBnP3M9NjEyeDYx/MiZ3PTAmaz0yMCZj/PU92UURiSmFUbk1N/NGpQZklBM3k1dnJP/ODhpOThOWkpSYWha/dG5ZRlpDcTA9',
     description: (
       <>
-        🛠️ <span className="text-gray-300">
+        🛠️ <span className="text-gray-500">
           Monthly visits for panel health check, performance tuning & issue resolution.
         </span>
       </>
@@ -37,7 +37,7 @@ const services: Service[] = [
     image: 'https://imgs.search.brave.com/9vNkXiwURwvVEU-hLJlkQ_mE3hW1V2NeEudwqMarV60/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvMTY4/MjUyNzEyL3Bob3Rv/L2NsZWFuaW5nLXNv/bGFyLXBhbmVscy5q/cGc_cz02MTJ4NjEy/Jnc9MCZrPTIwJmM9/dEdCdmJtcnhYVTMz/V25vUlFCMFcwQy1n/UmlHTEhuTnd4RFN1/OThuM3NEOD0',
     description: (
       <>
-        🧽 <span className="text-gray-300">
+        🧽 <span className="text-gray-500">
           Dust and debris cleaning using anti-static, eco-friendly tech for maximum output.
         </span>
       </>

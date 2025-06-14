@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   FaShoppingBag,
   FaSignInAlt,
@@ -21,6 +21,9 @@ const Header = ({ user }: PropsType) => {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [linkHover, setLinkHover] = useState<string | null>(null);
 
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const logoutHandler = async () => {
     try {
       await signOut(auth);
@@ -28,6 +31,17 @@ const Header = ({ user }: PropsType) => {
       setIsUserMenuOpen(false);
     } catch (error) {
       toast.error("Sign Out Fail");
+    }
+  };
+
+  const scrollToSection = (id: string) => {
+    if (location.pathname === "/") {
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth" });
+      }
+    } else {
+      navigate(`/#${id}`);
     }
   };
 
@@ -78,13 +92,13 @@ const Header = ({ user }: PropsType) => {
       </div>
 
       {/* Header */}
-      <header style={{
+      <header className=" bg-slate-900" style={{
         position: "fixed",
         top: "32px",
         width: "100%",
         zIndex: 20,
         boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
-        backgroundColor: "#1e293b"
+      
       }}>
         <nav style={{
           maxWidth: "1280px",
@@ -96,7 +110,7 @@ const Header = ({ user }: PropsType) => {
           color: "white",
           height: "100px"
         }}>
-          {/* Logo with Link to Home */}
+          {/* Logo */}
           <Link to="/" style={{ textDecoration: "none" }}>
             <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
               <img
@@ -108,28 +122,9 @@ const Header = ({ user }: PropsType) => {
           </Link>
 
           {/* Desktop Navigation */}
-          <div style={{
-            display: "none",
-            gap: "48px",
-            fontSize: "1.125rem",
-            fontWeight: 500,
-            fontFamily: "sans-serif",
-            textTransform: "uppercase"
-          }}>
-            {["/", "/about", "/team", "/products", "/review", "/contact"].map((path) => (
-              <Link
-                key={path}
-                to={path}
-                style={navLinkStyle(path)}
-                onMouseEnter={() => setLinkHover(path)}
-                onMouseLeave={() => setLinkHover(null)}
-              >
-                {path === "/" ? "Home" : path.slice(1)}
-              </Link>
-            ))}
-          </div>
+       
 
-          {/* Icons Section */}
+          {/* Icons */}
           <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
             <Link to="/cart" style={{ color: "white" }}>
               <FaShoppingBag />
@@ -196,7 +191,7 @@ const Header = ({ user }: PropsType) => {
               </Link>
             )}
 
-            {/* Mobile Menu Button */}
+            {/* Mobile Menu Toggle */}
             <button
               style={{
                 background: "none",
@@ -226,28 +221,26 @@ const Header = ({ user }: PropsType) => {
         </nav>
 
         {/* Mobile Menu */}
-        <div style={{
-          display: isMobileMenuOpen ? "flex" : "none",
-          flexDirection: "column",
-          gap: "24px",
-          backgroundColor: "#1e293b",
-          padding: "24px",
-          borderTop: "2px solid #e2e8f0"
-        }}>
-          {["/", "/about", "/team", "/products", "/review", "/contact"].map((path) => (
-            <Link
-              key={path}
-              to={path}
-              style={{
-                ...navLinkStyle(path),
-                textAlign: "center",
-                fontSize: "1.125rem"
-              }}
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              {path === "/" ? "Home" : path.slice(1)}
-            </Link>
-          ))}
+       <div style={{
+  position: "fixed",
+  top: "132px", // 32px (WhatsApp banner) + 100px (header)
+  right: isMobileMenuOpen ? "0" : "-250px",
+  width: "250px",
+  height: "100vh",
+  backgroundColor: "#1e293b",
+  padding: "24px",
+  display: "flex",
+  flexDirection: "column",
+  gap: "24px",
+  transition: "left 0.3s ease-in-out",
+  zIndex: 40
+}}>
+          <span onClick={() => { setIsMobileMenuOpen(false); navigate("/"); }} style={navLinkStyle("/")}>Home</span>
+          <span onClick={() => { setIsMobileMenuOpen(false); scrollToSection("products"); }} style={navLinkStyle("/products")}>Products</span>
+          <span onClick={() => { setIsMobileMenuOpen(false); scrollToSection("review"); }} style={navLinkStyle("/review")}>Review</span>
+          <Link to="/about" style={navLinkStyle("/about")} onClick={() => setIsMobileMenuOpen(false)}>About</Link>
+          <Link to="/team" style={navLinkStyle("/team")} onClick={() => setIsMobileMenuOpen(false)}>Team</Link>
+          <Link to="/contact" style={navLinkStyle("/contact")} onClick={() => setIsMobileMenuOpen(false)}>Contact</Link>
         </div>
       </header>
     </>

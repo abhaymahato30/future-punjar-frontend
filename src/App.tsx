@@ -11,6 +11,13 @@ import { getUser } from "./redux/api/userAPI";
 import { userExist, userNotExist } from "./redux/reducer/userReducer";
 import { RootState } from "./redux/store";
 import Footer from "./components/footer";
+import Teampage from "./pages/teamPage";
+import AboutPage from "./pages/AboutPage";
+import ContactPage from "./pages/ContactPage";
+import ScrollToTop from "./ScrollTop" ;
+import Policy from "./pages/Policy";
+import TermandCondition from "./pages/Term&Condition";
+import CancellationPage from "./pages/cancellationRefund"
 
 const Home = lazy(() => import("./pages/home"));
 const Search = lazy(() => import("./pages/search"));
@@ -71,11 +78,25 @@ const App = () => {
       {/* Header */}
       <Header user={user} />
       <Suspense fallback={<LoaderLayout />}>
+          <ScrollToTop />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/search" element={<Search />} />
           <Route path="/product/:id" element={<ProductDetails />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/team" element={<Teampage />} />
+          <Route path="/about" element={<AboutPage/>} />
+          <Route path="/contact" element={<ContactPage/>} />
+          <Route path="/policy" element={<Policy/>} />
+          <Route path="/t&c" element={<TermandCondition/>} />
+          <Route path="/cancellation" element={<CancellationPage/>} />
+
+
+
+
+
+
+
           {/* Not logged In Route */}
           <Route
             path="/login"

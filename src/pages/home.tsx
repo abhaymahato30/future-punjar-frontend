@@ -8,6 +8,9 @@ import { CartItem } from "../types/types";
 import { addToCart } from "../redux/reducer/cartReducer";
 import { useDispatch } from "react-redux";
 import ServiceSection from "../components/service";
+import Review from "../components/review";
+import FAQ from "../components/Faqs";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   const [search, setSearch] = useState("");
@@ -43,70 +46,34 @@ const Home = () => {
   return (
     <div className="product-list-page">
       {/* Hero Section */}
-      <section
-        style={{
-          position: "relative",
-          height: "100vh",
-          backgroundImage:
-            "url('https://res.cloudinary.com/duzo8q4gg/image/upload/v1738263148/2_vs8wmw.jpg')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          padding: "0 16px",
-          color: "white",
-          textAlign: "center",
-        }}
-      >
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            backgroundColor: "rgba(0, 0, 0, 0.7)",
-          }}
-        ></div>
-        <div
-          style={{
-            position: "relative",
-            zIndex: 10,
-            maxWidth: "700px",
-            width: "100%",
-            paddingRight: "16px",
-          }}
-        >
-          <h1
-            style={{
-              fontSize: "3.5rem",
-              fontWeight: "800",
-              lineHeight: "1.3",
-              background: "linear-gradient(to right, #facc15, #f97316, #dc2626)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              textShadow: "0px 4px 10px rgba(0,0,0,0.3)",
-            }}
-          >
-            Empowering Lives With Solar Energy
-          </h1>
-          <p
-            style={{
-              marginTop: "20px",
-              fontSize: "1rem",
-              fontWeight: "300",
-              fontStyle: "italic",
-              opacity: 0.9,
-              lineHeight: "1.6",
-            }}
-          >
-            Elevating businesses with innovation, sustainability, and passion.
-          </p>
+    <section className="relative h-screen bg-cover bg-center text-white flex items-center justify-center px-4" style={{ backgroundImage:  "url('https://res.cloudinary.com/duzo8q4gg/image/upload/v1738263148/2_vs8wmw.jpg')" }}>
+      <div className="absolute inset-0 bg-black opacity-70"></div>
+      <div className="relative z-10 text-center max-w-3xl w-full pr-4 sm:pr-12 mt-42">
+        <h1 className="text-3xl sm:text-4xl md:text-6xl font-extrabold leading-tight md:leading-[1.5] text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-orange-500 to-red-600 drop-shadow-2xl">
+          Empowering Lives With Solar Energy
+        </h1>
+        <p className="mt-6 text-sm sm:text-lg md:text-2xl font-light italic text-white opacity-90 leading-relaxed">
+          Elevating businesses with innovation, sustainability, and passion.
+        </p>
+        <div className="mt-8 flex flex-col sm:flex-row gap-6 justify-center">
+          <Link to="/about">
+            <button className="px-8 py-3 bg-yellow-500 text-gray-900 rounded-full hover:bg-yellow-400 transition-all duration-300 transform hover:scale-105 shadow-xl">
+              About Us
+            </button>
+          </Link>
+          <Link to="/contact">
+            <button className="px-8 py-3 bg-transparent border-2 border-white text-white rounded-full hover:bg-white hover:text-gray-900 transition-all duration-300 transform hover:scale-105 shadow-xl">
+              Contact Us
+            </button>
+          </Link>
         </div>
-      </section>
+      </div>
+    </section>
 
       {/* service section */}
       <ServiceSection/>
       {/* Products Section */}
-      <main style={{ padding: "20px" }}>
+      <section id="products">     <main style={{ padding: "20px" }}>
         <div
           style={{
             padding: "20px",
@@ -158,7 +125,15 @@ const Home = () => {
             ))}
           </div>
         )}
-      </main>
+      </main></section>
+   
+
+      {/* review section */}
+      <section id="review">    <Review/> </section>
+   
+
+      {/* Faqs section */}
+      <FAQ/>
     </div>
   );
 };
