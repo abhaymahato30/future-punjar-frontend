@@ -82,7 +82,7 @@ const Home = () => {
             alignItems: "center",
           }}
         >
-          <h1 style={{ marginBottom: "10px" }}>Our Products</h1>
+          <h1 className= "text-2xl font-bold" style={{ marginBottom: "10px" }}>Our Products</h1>
 
           <input
             type="text"

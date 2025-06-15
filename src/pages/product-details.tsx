@@ -109,7 +109,7 @@ const ProductDetails = () => {
   };
 
   return (
-    <div className="product-details">
+    <div className="product-details mt-28 md:mt-10">
       {isLoading ? (
         <ProductLoader />
       ) : (
@@ -133,9 +133,9 @@ const ProductDetails = () => {
                 />
               )}
             </section>
-            <section>
+            <section className="mt-22 md:mt-10">
               <code>{data?.product?.category}</code>
-              <h1>{data?.product?.name}</h1>
+              <h3 className="text-">{data?.product?.name}</h3>
               <em
                 style={{ display: "flex", gap: "1rem", alignItems: "center" }}
               >
