@@ -59,24 +59,34 @@ const ServiceSection = () => {
   return (
     <>
       <section className="service-section">
-        <h2 className="section-title">⚡ Our Solar Services</h2>
-        <div className="card-container">
-          {services.map((service, index) => (
-            <div key={index} className="service-card">
-              <div className="card-image">
-                <img src={service.image} alt={service.title} />
-              </div>
-              <div className="card-content">
-                <div className="card-icon">
-                  {service.icon}
-                  <h3 className="card-title">{service.title}</h3>
-                </div>
-                <p className="card-description">{service.description}</p>
-              </div>
-            </div>
-          ))}
+  <h2 className="section-title">⚡ Our Solar Services</h2>
+  <div className="card-container">
+    {services.map((service, index) => (
+      <div key={index} className="service-card">
+        <div className="card-image">
+          <img src={service.image} alt={service.title} />
         </div>
-      </section>
+        <div className="card-content">
+          <div className="card-icon">
+            {service.icon}
+            <h3 className="card-title">{service.title}</h3>
+          </div>
+          <p className="card-description">{service.description}</p>
+          
+          {/* Call Button */}
+          <a
+            href="tel:9430649460"
+            className="call-button"
+            onClick={() => console.log(`Calling about ${service.title}`)}
+          >
+            📞 Call Now
+          </a>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
 
       {/* training section */}
   <section className="training-section">

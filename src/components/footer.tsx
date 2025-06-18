@@ -5,6 +5,8 @@ import {
   
   faLinkedin,
 } from "@fortawesome/free-brands-svg-icons";
+import { FaPhone, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
+
 import { faInstagram } from "@fortawesome/free-brands-svg-icons/faInstagram";
 import { Link as ScrollLink } from "react-scroll";
 import { Link as RouterLink } from "react-router-dom";
@@ -99,15 +101,35 @@ const Footer: React.FC = () => {
               className="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto"
               style={{ width: "60px" }}
             />
-            <p className="">
-              97/D, Usha Siddhi Kunj Vardhman Compound Lalpur, Ranchi,
-              Jharkhand-834001
-            </p>
-            <p className="mt-4">
-              BIT Sindri Dhanbad, Jharkhand JUT Namkum Ranchi, Jharkhand
-            </p>
-            <p>+91 9430649460</p>
-            <p>Panjarrenewables@gmail.com</p>
+          <p className="flex justify-center items-start gap-2">
+            <FaMapMarkerAlt className="mt-1 text-xl text-green-400" />
+            <a
+              href="https://www.google.com/maps/search/?api=1&query=97/D+Usha+Siddhi+Kunj+Vardhman+Compound+Lalpur+Ranchi"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-white transition"
+            >
+              97/D, Usha Siddhi Kunj Vardhman Compound,<br />
+              Lalpur, Ranchi, Jharkhand – 834001
+            </a>
+          </p>
+
+          <p className="flex justify-center items-center gap-2">
+            <FaPhone className="text-xl text-green-400" />
+            <a href="tel:+919430649460" className="hover:text-white transition">
+              +91 94306 49460
+            </a>
+          </p>
+
+          <p className="flex justify-center items-center gap-2">
+            <FaEnvelope className="text-xl text-green-400" />
+            <a
+              href="mailto:Panjarrenewables@gmail.com"
+              className="hover:text-white transition"
+            >
+              Panjarrenewables@gmail.com
+            </a>
+          </p>
           </div>
         </div>
       </div>
