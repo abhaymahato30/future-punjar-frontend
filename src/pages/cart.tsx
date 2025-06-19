@@ -113,7 +113,7 @@ const Cart = () => {
             </span>
           ))}
 
-        {cartItems.length > 0 && <Link to="/shipping">Checkout</Link>}
+        <Link to="/shipping">Checkout</Link>
       </aside>
     </div>
   );
