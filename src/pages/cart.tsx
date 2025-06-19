@@ -24,19 +24,28 @@ const Cart = () => {
 
   const incrementHandler = (cartItem: CartItem) => {
     if (cartItem.quantity >= cartItem.stock) return;
-
     dispatch(addToCart({ ...cartItem, quantity: cartItem.quantity + 1 }));
   };
+
   const decrementHandler = (cartItem: CartItem) => {
     if (cartItem.quantity <= 1) return;
-
     dispatch(addToCart({ ...cartItem, quantity: cartItem.quantity - 1 }));
   };
+
   const removeHandler = (productId: string) => {
     dispatch(removeCartItem(productId));
   };
+
   useEffect(() => {
     const { token: cancelToken, cancel } = axios.CancelToken.source();
+
+    // ✅ Skip API call if coupon is empty or just whitespace
+    if (!couponCode.trim()) {
+      dispatch(discountApplied(0));
+      setIsValidCouponCode(false);
+      dispatch(calculatePrice());
+      return;
+    }
 
     const timeOutID = setTimeout(() => {
       axios
@@ -113,7 +122,7 @@ const Cart = () => {
             </span>
           ))}
 
-        <Link to="/shipping">Checkout</Link>
+        {cartItems.length > 0 && <Link to="/shipping">Checkout</Link>}
       </aside>
     </div>
   );
