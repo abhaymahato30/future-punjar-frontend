@@ -60,12 +60,12 @@ const Footer: React.FC = () => {
             </RouterLink>
 
             <RouterLink
-              to="/team"
+              to="/t&c"
             
               
               className="text-white cursor-pointer block hover:text-blue-200 transition duration-300 ease-in-out transform hover:scale-110"
             >
-              Team
+              Term & conditions
             </RouterLink>
 
             <ScrollLink
