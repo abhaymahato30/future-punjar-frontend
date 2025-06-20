@@ -50,7 +50,9 @@ const Checkout = () => {
         items: cartItems,
         shippingInfo,
         coupon: "", // optional
+
       });
+      console.log("Sending userId:", user?._id);
 
       await loadRazorpay();
 
