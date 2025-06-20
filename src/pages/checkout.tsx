@@ -45,19 +45,17 @@ const Checkout = () => {
   const paymentHandler = async () => {
     setLoading(true);
     try {
-      const { data } = await axios.post(
-        `/api/v1/payment/create?id=${user?._id}`,
-        {
-          items: cartItems,
-          shippingInfo,
-          coupon: "", // optional: pass applied coupon code
-        }
-      );
+      const { data } = await axios.post(`/api/v1/payment/create`, {
+        userId: user?._id, // ✅ send user ID in body
+        items: cartItems,
+        shippingInfo,
+        coupon: "", // optional
+      });
 
       await loadRazorpay();
 
       const options = {
-        key: import.meta.env.VITE_RAZORPAY_KEY_ID, // Add this in .env file
+        key: import.meta.env.VITE_RAZORPAY_KEY_ID,
         amount: data.amount,
         currency: data.currency,
         name: "Panjar Future",
@@ -85,7 +83,6 @@ const Checkout = () => {
 
               const result = await newOrder(orderData);
               dispatch(resetCart());
-
               toast.success("Payment Successful!");
 
               setTimeout(() => {
