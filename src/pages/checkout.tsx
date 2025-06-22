@@ -75,7 +75,7 @@ const Checkout = () => {
             if (verifyRes.data.success) {
               dispatch(resetCart());
               toast.success("Payment Successful!");
-              navigate("/success");
+              navigate("/orders");
             } else {
               toast.error("Payment verification failed");
             }
