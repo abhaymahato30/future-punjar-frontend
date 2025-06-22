@@ -17,7 +17,7 @@ declare global {
 }
 
 const Checkout = () => {
-  const { user } = useSelector((state: RootState) => state.userReducer);
+  const { user, token } = useSelector((state: RootState) => state.userReducer);
   const {
     shippingInfo,
     cartItems,
@@ -31,45 +31,71 @@ const Checkout = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [newOrder] = useNewOrderMutation();
-
   const [loading, setLoading] = useState(false);
 
   const loadRazorpay = () =>
-    new Promise((resolve) => {
+    new Promise((resolve, reject) => {
       const script = document.createElement("script");
       script.src = "https://checkout.razorpay.com/v1/checkout.js";
       script.onload = resolve;
+      script.onerror = () => reject("Failed to load Razorpay SDK");
       document.body.appendChild(script);
     });
 
   const paymentHandler = async () => {
-    setLoading(true);
-    try {
-      const { data } = await axios.post(`/api/v1/payment/create`, {
-        userId: user?._id, // ✅ send user ID in body
-        items: cartItems,
-        shippingInfo,
-        coupon: "", // optional
+    if (!user || !user._id || !token) {
+      toast.error("Please log in to proceed.");
+      return;
+    }
 
-      });
-      console.log("Sending userId:", user?._id);
+    setLoading(true);
+
+    try {
+      const { data } = await axios.post(
+        `/api/v1/payment/create`,
+        {
+          userId: user._id,
+          items: cartItems,
+          shippingInfo,
+          coupon: "",
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const { amount, currency, razorpayOrderId } = data;
 
       await loadRazorpay();
 
       const options = {
         key: import.meta.env.VITE_RAZORPAY_KEY_ID,
-        amount: data.amount,
-        currency: data.currency,
+        amount,
+        currency,
         name: "Panjar Future",
         description: "Order Payment",
-        order_id: data.razorpayOrderId,
+        order_id: razorpayOrderId,
         prefill: {
-          name: user?.name,
-          email: user?.email,
+          name: user.name,
+          email: user.email,
         },
-        handler: async (response: any) => {
+        handler: async (response: {
+          razorpay_order_id: string;
+          razorpay_payment_id: string;
+          razorpay_signature: string;
+        }) => {
           try {
-            const verifyRes = await axios.post("/api/v1/payment/verify", response);
+            const verifyRes = await axios.post(
+              "/api/v1/payment/verify",
+              response,
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              }
+            );
 
             if (verifyRes.data.success) {
               const orderData: NewOrderRequest = {
@@ -80,7 +106,7 @@ const Checkout = () => {
                 discount,
                 shippingCharges,
                 total,
-                user: user?._id!,
+                user: user._id,
               };
 
               const result = await newOrder(orderData);
@@ -98,11 +124,17 @@ const Checkout = () => {
           }
         },
         theme: { color: "#0f172a" },
+        modal: {
+          ondismiss: () => {
+            toast.error("Payment popup closed");
+          },
+        },
       };
 
       const rzp = new window.Razorpay(options);
       rzp.open();
     } catch (error: any) {
+      console.error("Payment Error:", error);
       toast.error(error?.response?.data?.message || "Payment failed");
     } finally {
       setLoading(false);

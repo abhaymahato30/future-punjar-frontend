@@ -149,3 +149,9 @@ export type SingleDiscountResponse = {
   success: boolean;
   coupon: CouponType;
 };
+export interface LoginResponse {
+  success: boolean;
+  message: string;
+  user: User;
+  token: string;
+}

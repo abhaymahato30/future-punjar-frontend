@@ -2,6 +2,7 @@ import { CartItem, ShippingInfo, User } from "./types";
 
 export interface UserReducerInitialState {
   user: User | null;
+  token: string | null; 
   loading: boolean;
 }
 
