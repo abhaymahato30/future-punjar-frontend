@@ -1,13 +1,10 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
-import axios from "axios";
+import axios from "../utils/axiosConfig";
 import { useNavigate } from "react-router-dom";
-import { useNewOrderMutation } from "../redux/api/orderAPI";
 import { resetCart } from "../redux/reducer/cartReducer";
 import { RootState } from "../redux/store";
-import { NewOrderRequest } from "../types/api-types";
-import { responseToast } from "../utils/features";
 import { ImSpinner8 } from "react-icons/im";
 
 declare global {
@@ -17,20 +14,12 @@ declare global {
 }
 
 const Checkout = () => {
-  const { user, token } = useSelector((state: RootState) => state.userReducer);
-  const {
-    shippingInfo,
-    cartItems,
-    subtotal,
-    tax,
-    discount,
-    shippingCharges,
-    total,
-  } = useSelector((state: RootState) => state.cartReducer);
+  const { shippingInfo, cartItems, total } = useSelector(
+    (state: RootState) => state.cartReducer
+  );
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [newOrder] = useNewOrderMutation();
   const [loading, setLoading] = useState(false);
 
   const loadRazorpay = () =>
@@ -43,28 +32,19 @@ const Checkout = () => {
     });
 
   const paymentHandler = async () => {
-    if (!user || !user._id || !token) {
-      toast.error("Please log in to proceed.");
+    if (!cartItems.length || !shippingInfo) {
+      toast.error("Cart or Shipping Info is missing");
       return;
     }
 
     setLoading(true);
 
     try {
-      const { data } = await axios.post(
-        `/api/v1/payment/create`,
-        {
-          userId: user._id,
-          items: cartItems,
-          shippingInfo,
-          coupon: "",
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const { data } = await axios.post("/api/v1/payment/create", {
+        items: cartItems,
+        shippingInfo,
+        coupon: "",
+      });
 
       const { amount, currency, razorpayOrderId } = data;
 
@@ -78,8 +58,8 @@ const Checkout = () => {
         description: "Order Payment",
         order_id: razorpayOrderId,
         prefill: {
-          name: user.name,
-          email: user.email,
+          name: shippingInfo.name || "Guest",
+          email: shippingInfo.email || "",
         },
         handler: async (response: {
           razorpay_order_id: string;
@@ -89,37 +69,17 @@ const Checkout = () => {
           try {
             const verifyRes = await axios.post(
               "/api/v1/payment/verify",
-              response,
-              {
-                headers: {
-                  Authorization: `Bearer ${token}`,
-                },
-              }
+              response
             );
 
             if (verifyRes.data.success) {
-              const orderData: NewOrderRequest = {
-                shippingInfo,
-                orderItems: cartItems,
-                subtotal,
-                tax,
-                discount,
-                shippingCharges,
-                total,
-                user: user._id,
-              };
-
-              const result = await newOrder(orderData);
               dispatch(resetCart());
               toast.success("Payment Successful!");
-
-              setTimeout(() => {
-                responseToast(result, navigate, "/orders");
-              }, 1500);
+              navigate("/success");
             } else {
               toast.error("Payment verification failed");
             }
-          } catch (err) {
+          } catch {
             toast.error("Verification failed");
           }
         },
