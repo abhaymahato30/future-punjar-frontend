@@ -3,7 +3,10 @@ import toast from "react-hot-toast";
 import { Column } from "react-table";
 import TableHOC from "../../components/admin/TableHOC";
 import { Skeleton } from "../../components/loader";
-import { useAllOrdersQuery, useUpdateOrderMutation } from "../../redux/api/orderAPI";
+import {
+  useAllOrdersQuery,
+  useUpdateOrderMutation,
+} from "../../redux/api/orderAPI";
 import { CustomError } from "../../types/api-types";
 
 type DataType = {
@@ -39,51 +42,58 @@ const AdminOrders = () => {
   useEffect(() => {
     if (data) {
       setRows(
-        data.orders.map((order) => ({
-          _id: order._id,
-          user: (order.user as { name: string })?.name || "N/A",
-          amount: order.total,
-          status: (
-            <span
-              className={
-                order.status === "Processing"
-                  ? "red"
+        data.orders.map((order) => {
+          const userInfo = order.user as { _id: string; name: string };
+
+          return {
+            _id: order._id,
+            user: userInfo?.name || "N/A",
+            amount: order.total,
+            status: (
+              <span
+                className={
+                  order.status === "Processing"
+                    ? "red"
+                    : order.status === "Shipped"
+                    ? "orange"
+                    : "green"
+                }
+              >
+                {order.status}
+              </span>
+            ),
+            items: (
+              <ul>
+                {order.orderItems.map((item, index) => (
+                  <li key={index}>
+                    {item.name} x {item.quantity}
+                  </li>
+                ))}
+              </ul>
+            ),
+            action: (
+              <button
+                disabled={order.status === "Delivered"}
+                className="btn"
+                onClick={() =>
+                  updateOrder({
+                    userId: userInfo._id,
+                    orderId: order._id,
+                  })
+                    .unwrap()
+                    .then((res) => toast.success(res.message))
+                    .catch((err) => toast.error(err.data.message))
+                }
+              >
+                {order.status === "Processing"
+                  ? "Mark as Shipped"
                   : order.status === "Shipped"
-                  ? "orange"
-                  : "green"
-              }
-            >
-              {order.status}
-            </span>
-          ),
-          items: (
-            <ul>
-              {order.orderItems.map((item, index) => (
-                <li key={index}>
-                  {item.name} x {item.quantity}
-                </li>
-              ))}
-            </ul>
-          ),
-          action: (
-            <button
-              disabled={order.status === "Delivered"}
-              className="btn"
-              onClick={() =>
-                updateOrder({ userId: order.user._id, orderId: order._id })
-                  .unwrap()
-                  .then((res) => toast.success(res.message))
-                  .catch((err) => toast.error(err.data.message))
-              }
-            >
-              {order.status === "Processing"
-                ? "Mark as Shipped"
-                : order.status === "Shipped"
-                ? "Mark as Delivered"
-                : "Completed"}
-            </button>
-          ),
-        }))
+                  ? "Mark as Delivered"
+                  : "Completed"}
+              </button>
+            ),
+          };
+        })
       );
     }
   }, [data, updateOrder]);
