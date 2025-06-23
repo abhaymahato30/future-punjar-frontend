@@ -14,8 +14,15 @@ declare global {
 }
 
 const Checkout = () => {
-  const { shippingInfo, cartItems, total, discount} =
-    useSelector((state: RootState) => state.cartReducer);
+  const {
+    shippingInfo,
+    cartItems,
+    total,
+    discount,
+    tax,
+    subtotal,
+    shippingCharges,
+  } = useSelector((state: RootState) => state.cartReducer);
 
   const { user } = useSelector((state: RootState) => state.userReducer); // firebase user
   const firebaseUserId = user?._id;
@@ -71,12 +78,15 @@ const Checkout = () => {
         }) => {
           try {
             const verifyRes = await axios.post("/api/v1/payment/verify", {
-              ...response,
+              ...response, // includes razorpay_order_id, razorpay_payment_id, razorpay_signature
               items: cartItems,
               shippingInfo,
               firebaseUserId,
               total,
               discount,
+              shippingCharges, 
+              tax, 
+              subtotal, 
             });
 
             if (verifyRes.data.success) {
