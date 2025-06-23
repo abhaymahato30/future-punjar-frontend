@@ -14,7 +14,7 @@ declare global {
 }
 
 const Checkout = () => {
-  const { shippingInfo, cartItems, total, discount, tax, subtotal, shippingCharges } =
+  const { shippingInfo, cartItems, total, discount} =
     useSelector((state: RootState) => state.cartReducer);
 
   const { user } = useSelector((state: RootState) => state.userReducer); // firebase user
