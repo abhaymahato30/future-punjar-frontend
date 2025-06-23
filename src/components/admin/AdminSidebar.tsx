@@ -100,8 +100,8 @@ const DivOne = ({ location }: { location: Location }) => (
         location={location}
       />
       <Li
-        url="/admin/transaction"
-        text="Transaction"
+        url="/admin/all-orders"
+        text="Orders"
         Icon={AiFillFileText}
         location={location}
       />

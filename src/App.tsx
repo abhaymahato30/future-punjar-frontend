@@ -19,6 +19,7 @@
   import TermandCondition from "./pages/Term&Condition";
   import CancellationPage from "./pages/cancellationRefund"
 
+
   const Home = lazy(() => import("./pages/home"));
   const Search = lazy(() => import("./pages/search"));
   const ProductDetails = lazy(() => import("./pages/product-details"));
@@ -34,7 +35,7 @@
   const Dashboard = lazy(() => import("./pages/admin/dashboard"));
   const Products = lazy(() => import("./pages/admin/products"));
   const Customers = lazy(() => import("./pages/admin/customers"));
-  const Transaction = lazy(() => import("./pages/admin/transaction"));
+  const AdminOrders = lazy(() => import("./pages/admin/AdminOrders"));
   const Discount = lazy(() => import("./pages/admin/discount"));
   const Barcharts = lazy(() => import("./pages/admin/charts/barcharts"));
   const Piecharts = lazy(() => import("./pages/admin/charts/piecharts"));
@@ -130,7 +131,7 @@
               <Route path="/admin/dashboard" element={<Dashboard />} />
               <Route path="/admin/product" element={<Products />} />
               <Route path="/admin/customer" element={<Customers />} />
-              <Route path="/admin/transaction" element={<Transaction />} />
+              <Route path="/admin/all-orders" element={<AdminOrders />} />
               <Route path="/admin/discount" element={<Discount />} />
 
               {/* Charts */}
