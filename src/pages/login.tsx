@@ -29,6 +29,7 @@ const Login = () => {
         role: "user",
         dob: date,
         _id: user.uid,
+        uid: user.uid
       });
 
       if ("data" in res) {
