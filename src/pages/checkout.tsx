@@ -18,7 +18,7 @@ const Checkout = () => {
     useSelector((state: RootState) => state.cartReducer);
 
   const { user } = useSelector((state: RootState) => state.userReducer); // firebase user
-  const firebaseUserId = user?._id; // Adjust based on your structure
+  const firebaseUserId = user?._id;
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -70,33 +70,24 @@ const Checkout = () => {
           razorpay_signature: string;
         }) => {
           try {
-            const verifyRes = await axios.post("/api/v1/payment/verify", response);
+            const verifyRes = await axios.post("/api/v1/payment/verify", {
+              ...response,
+              items: cartItems,
+              shippingInfo,
+              firebaseUserId,
+              total,
+              discount,
+            });
 
-            if (!verifyRes.data.success) {
-              // ✅ Create order after verification
-              const orderRes = await axios.post("/api/v1/order/new", {
-                shippingInfo,
-                orderItems: cartItems,
-                subtotal,
-                tax,
-                discount,
-                shippingCharges,
-                total,
-                user: firebaseUserId,
-              });
-
-              if (orderRes.data.success) {
-                dispatch(resetCart());
-                toast.success("Order placed successfully!");
-                navigate("/orders");
-              } else {
-                toast.error("Order creation failed");
-              }
+            if (verifyRes.data.success) {
+              dispatch(resetCart());
+              toast.success("Order placed successfully!");
+              navigate("/orders");
             } else {
               toast.error("Payment verification failed");
             }
           } catch (err) {
-            toast.error("Verification or order creation failed");
+            toast.error("Verification failed. Please contact support.");
           }
         },
         theme: { color: "#0f172a" },
