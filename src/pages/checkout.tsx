@@ -14,9 +14,11 @@ declare global {
 }
 
 const Checkout = () => {
-  const { shippingInfo, cartItems, total } = useSelector(
-    (state: RootState) => state.cartReducer
-  );
+  const { shippingInfo, cartItems, total, discount, tax, subtotal, shippingCharges } =
+    useSelector((state: RootState) => state.cartReducer);
+
+  const { user } = useSelector((state: RootState) => state.userReducer); // firebase user
+  const firebaseUserId = user?._id; // Adjust based on your structure
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -44,6 +46,7 @@ const Checkout = () => {
         items: cartItems,
         shippingInfo,
         coupon: "",
+        firebaseUserId,
       });
 
       const { amount, currency, razorpayOrderId } = data;
@@ -67,20 +70,33 @@ const Checkout = () => {
           razorpay_signature: string;
         }) => {
           try {
-            const verifyRes = await axios.post(
-              "/api/v1/payment/verify",
-              response
-            );
+            const verifyRes = await axios.post("/api/v1/payment/verify", response);
 
             if (verifyRes.data.success) {
-              dispatch(resetCart());
-              toast.success("Payment Successful!");
-              navigate("/orders");
+              // ✅ Create order after verification
+              const orderRes = await axios.post("/api/v1/order/new", {
+                shippingInfo,
+                orderItems: cartItems,
+                subtotal,
+                tax,
+                discount,
+                shippingCharges,
+                total,
+                user: firebaseUserId,
+              });
+
+              if (orderRes.data.success) {
+                dispatch(resetCart());
+                toast.success("Order placed successfully!");
+                navigate("/orders");
+              } else {
+                toast.error("Order creation failed");
+              }
             } else {
               toast.error("Payment verification failed");
             }
-          } catch {
-            toast.error("Verification failed");
+          } catch (err) {
+            toast.error("Verification or order creation failed");
           }
         },
         theme: { color: "#0f172a" },
