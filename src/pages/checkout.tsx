@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import axios from "../utils/axiosConfig";
 import { useNavigate } from "react-router-dom";
-import { resetCart } from "../redux/reducer/cartReducer";
+import { resetCart, calculatePrice } from "../redux/reducer/cartReducer"; // ✅ added calculatePrice
 import { RootState } from "../redux/store";
 import { ImSpinner8 } from "react-icons/im";
 
@@ -46,6 +46,10 @@ const Checkout = () => {
       return;
     }
 
+    // ✅ Recalculate price to ensure values are fresh
+    dispatch(calculatePrice());
+
+    // ❗ Check again after calculating
     if (
       subtotal === undefined ||
       tax === undefined ||
@@ -86,7 +90,6 @@ const Checkout = () => {
           razorpay_signature: string;
         }) => {
           try {
-            // Debug logs for backend inspection
             console.log("📦 subtotal:", subtotal);
             console.log("🚚 shippingCharges:", shippingCharges);
             console.log("🧾 tax:", tax);
