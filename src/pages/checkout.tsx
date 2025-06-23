@@ -24,7 +24,7 @@ const Checkout = () => {
     shippingCharges,
   } = useSelector((state: RootState) => state.cartReducer);
 
-  const { user } = useSelector((state: RootState) => state.userReducer); // firebase user
+  const { user } = useSelector((state: RootState) => state.userReducer);
   const firebaseUserId = user?._id;
 
   const dispatch = useDispatch();
@@ -43,6 +43,15 @@ const Checkout = () => {
   const paymentHandler = async () => {
     if (!cartItems.length || !shippingInfo) {
       toast.error("Cart or Shipping Info is missing");
+      return;
+    }
+
+    if (
+      subtotal === undefined ||
+      tax === undefined ||
+      shippingCharges === undefined
+    ) {
+      toast.error("Pricing breakdown missing");
       return;
     }
 
@@ -77,16 +86,21 @@ const Checkout = () => {
           razorpay_signature: string;
         }) => {
           try {
+            // Debug logs for backend inspection
+            console.log("📦 subtotal:", subtotal);
+            console.log("🚚 shippingCharges:", shippingCharges);
+            console.log("🧾 tax:", tax);
+
             const verifyRes = await axios.post("/api/v1/payment/verify", {
-              ...response, // includes razorpay_order_id, razorpay_payment_id, razorpay_signature
+              ...response,
               items: cartItems,
               shippingInfo,
               firebaseUserId,
               total,
               discount,
-              shippingCharges, 
-              tax, 
-              subtotal, 
+              shippingCharges,
+              tax,
+              subtotal,
             });
 
             if (verifyRes.data.success) {
@@ -97,6 +111,7 @@ const Checkout = () => {
               toast.error("Payment verification failed");
             }
           } catch (err) {
+            console.error("Verification error:", err);
             toast.error("Verification failed. Please contact support.");
           }
         },
