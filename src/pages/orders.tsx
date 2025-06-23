@@ -42,14 +42,17 @@ const column: Column<DataType>[] = [
 const Orders = () => {
   const { user } = useSelector((state: RootState) => state.userReducer);
 
+  // ✅ Use `user.uid` instead of `_id`
   const { isLoading, data, isError, error } = useMyOrdersQuery(user?._id!);
 
   const [rows, setRows] = useState<DataType[]>([]);
 
-  if (isError) {
-    const err = error as CustomError;
-    toast.error(err.data.message);
-  }
+  useEffect(() => {
+    if (isError) {
+      const err = error as CustomError;
+      toast.error(err.data.message);
+    }
+  }, [isError, error]);
 
   useEffect(() => {
     if (data)
@@ -83,6 +86,7 @@ const Orders = () => {
     "Orders",
     rows.length > 6
   )();
+
   return (
     <div className="container">
       <h1>My Orders</h1>
