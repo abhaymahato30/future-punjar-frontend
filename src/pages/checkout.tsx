@@ -72,7 +72,7 @@ const Checkout = () => {
           try {
             const verifyRes = await axios.post("/api/v1/payment/verify", response);
 
-            if (verifyRes.data.success) {
+            if (!verifyRes.data.success) {
               // ✅ Create order after verification
               const orderRes = await axios.post("/api/v1/order/new", {
                 shippingInfo,
