@@ -42,8 +42,8 @@ const column: Column<DataType>[] = [
 const Orders = () => {
   const { user } = useSelector((state: RootState) => state.userReducer);
 
-  // ✅ Use `user.uid` instead of `_id`
-  const { isLoading, data, isError, error } = useMyOrdersQuery(user?._id!);
+  // ✅ Firebase UID used here
+  const { isLoading, data, isError, error } = useMyOrdersQuery(user?.uid || user?._id!);
 
   const [rows, setRows] = useState<DataType[]>([]);
 
