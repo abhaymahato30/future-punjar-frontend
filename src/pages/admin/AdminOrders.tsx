@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { Column } from "react-table";
+import { useSelector } from "react-redux";
+import AdminSidebar from "../../components/admin/AdminSidebar";
 import TableHOC from "../../components/admin/TableHOC";
 import { Skeleton } from "../../components/loader";
-import {
-  useAllOrdersQuery,
-  useUpdateOrderMutation,
-} from "../../redux/api/orderAPI";
+import { useAllOrdersQuery, useUpdateOrderMutation } from "../../redux/api/orderAPI";
+import { RootState } from "../../redux/store";
 import { CustomError } from "../../types/api-types";
 
 type DataType = {
@@ -28,8 +28,10 @@ const columns: Column<DataType>[] = [
 ];
 
 const AdminOrders = () => {
-  const { data, isLoading, isError, error } = useAllOrdersQuery("admin");
+  const { user } = useSelector((state: RootState) => state.userReducer);
+  const { data, isLoading, isError, error } = useAllOrdersQuery(user?._id!);
   const [updateOrder] = useUpdateOrderMutation();
+
   const [rows, setRows] = useState<DataType[]>([]);
 
   useEffect(() => {
@@ -42,61 +44,56 @@ const AdminOrders = () => {
   useEffect(() => {
     if (data) {
       setRows(
-        data.orders.map((order) => {
-          const userInfo = order.user as { _id: string; name: string };
-
-          return {
-            _id: order._id,
-            user: userInfo?.name || "N/A",
-            amount: order.total,
-            status: (
-              <span
-                className={
-                  order.status === "Processing"
-                    ? "red"
-                    : order.status === "Shipped"
-                    ? "orange"
-                    : "green"
-                }
-              >
-                {order.status}
-              </span>
-            ),
-            items: (
-              <ul>
-                {order.orderItems.map((item, index) => (
-                  <li key={index}>
-                    {item.name} x {item.quantity}
-                  </li>
-                ))}
-              </ul>
-            ),
-            action: (
-              <button
-                disabled={order.status === "Delivered"}
-                className="btn"
-                onClick={() =>
-                  updateOrder({
-                    userId: userInfo._id,
-                    orderId: order._id,
-                  })
-                    .unwrap()
-                    .then((res) => toast.success(res.message))
-                    .catch((err) => toast.error(err.data.message))
-                }
-              >
-                {order.status === "Processing"
-                  ? "Mark as Shipped"
+        data.orders.map((order) => ({
+          _id: order._id,
+          user: typeof order.user === "object" && "name" in order.user
+            ? order.user.name
+            : "Unknown",
+          amount: order.total,
+          status: (
+            <span
+              className={
+                order.status === "Processing"
+                  ? "red"
                   : order.status === "Shipped"
-                  ? "Mark as Delivered"
-                  : "Completed"}
-              </button>
-            ),
-          };
-        })
+                  ? "orange"
+                  : "green"
+              }
+            >
+              {order.status}
+            </span>
+          ),
+          items: (
+            <ul>
+              {order.orderItems.map((item, index) => (
+                <li key={index}>
+                  {item.name} x {item.quantity}
+                </li>
+              ))}
+            </ul>
+          ),
+          action: (
+            <button
+              disabled={order.status === "Delivered"}
+              className="btn"
+              onClick={() =>
+                updateOrder({ userId: user?._id!, orderId: order._id })
+                  .unwrap()
+                  .then((res) => toast.success(res.message))
+                  .catch((err) => toast.error(err.data.message))
+              }
+            >
+              {order.status === "Processing"
+                ? "Mark as Shipped"
+                : order.status === "Shipped"
+                ? "Mark as Delivered"
+                : "Completed"}
+            </button>
+          ),
+        }))
       );
     }
-  }, [data, updateOrder]);
+  }, [data, updateOrder, user?._id]);
 
   const Table = TableHOC<DataType>(
     columns,
@@ -107,9 +104,12 @@ const AdminOrders = () => {
   )();
 
   return (
-    <div className="container">
-      <h1>Admin - All Orders</h1>
-      {isLoading ? <Skeleton length={10} /> : Table}
+    <div className="admin-container">
+      <AdminSidebar />
+      <main>
+        <h1>All Orders</h1>
+        {isLoading ? <Skeleton length={10} /> : Table}
+      </main>
     </div>
   );
 };
