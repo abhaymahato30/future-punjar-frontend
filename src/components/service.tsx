@@ -120,7 +120,7 @@ const ServiceSection = () => {
             className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded transition"
             onClick={() =>
               window.open(
-                "https://docs.google.com/forms/d/e/1FAIpQLSdBeDxJA3vUcHOlsbe_NJKi_1d-CzwuLmVh2Tsa1rxwBKYPpw/viewform",
+                "https://rzp.io/rzp/0jyo3ZSn",
                 "_blank"
               )
             }
@@ -151,7 +151,7 @@ const ServiceSection = () => {
             className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded transition"
             onClick={() =>
               window.open(
-                "https://docs.google.com/forms/d/e/1FAIpQLSdBeDxJA3vUcHOlsbe_NJKi_1d-CzwuLmVh2Tsa1rxwBKYPpw/viewform",
+                "https://rzp.io/rzp/0jyo3ZSn",
                 "_blank"
               )
             }
