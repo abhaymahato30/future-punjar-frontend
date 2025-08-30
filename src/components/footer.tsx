@@ -74,7 +74,7 @@ const Footer: React.FC = () => {
               
               className="text-white cursor-pointer block hover:text-blue-200 transition duration-300 ease-in-out transform hover:scale-110"
             >
-              Products
+              Product
             </ScrollLink>
 
             <RouterLink
