@@ -150,7 +150,7 @@ const Home = () => {
   // ✅ Full-width loading skeleton for one product
   <div className="w-full flex justify-center items-center px-6">
     <div className="w-full max-w-6xl bg-white rounded-2xl shadow-md overflow-hidden animate-pulse">
-      <div className="h-60 sm:h-96 bg-gray-200"></div>
+      <div className="h-60 sm:h-96 bg-gray-200"></div>  
       <div className="p-6 space-y-4">
         <div className="h-6 w-3/4 bg-gray-200 rounded"></div>
         <div className="h-4 w-1/2 bg-gray-200 rounded"></div>
