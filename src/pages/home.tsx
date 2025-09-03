@@ -3,7 +3,7 @@ import ProductCard from "../components/product-card";
 import { useSearchProductsQuery } from "../redux/api/productAPI";
 import { CustomError } from "../types/api-types";
 import toast from "react-hot-toast";
-import { Skeleton } from "../components/loader";
+// import { Skeleton } from "../components/loader";
 import { CartItem } from "../types/types";
 import { addToCart } from "../redux/reducer/cartReducer";
 import { useDispatch } from "react-redux";
@@ -146,22 +146,22 @@ const Home = () => {
               ))}
             </div>
           )} */}
-          {productLoading ? (
+{productLoading ? (
   // ✅ Full-width loading skeleton for one product
   <div className="w-full flex justify-center items-center px-6">
     <div className="w-full max-w-6xl bg-white rounded-2xl shadow-md overflow-hidden animate-pulse">
-      <div className="h-80 sm:h-96 bg-gray-200"></div>  
+      <div className="h-60 sm:h-96 bg-gray-200"></div>  
       <div className="p-6 space-y-4">
         <div className="h-6 w-3/4 bg-gray-200 rounded"></div>
         <div className="h-4 w-1/2 bg-gray-200 rounded"></div>
         <div className="h-10 w-1/3 bg-gray-200 rounded"></div>
       </div>
     </div>
-  </div>
+  </div>  
 ) : (
   // ✅ Show single product in full-width hero style
   <div className="w-full">
-    {searchedData?.products.length > 0 ? (
+    {searchedData?.products && searchedData.products.length > 0 ? (
       <ProductCard  
         productId={searchedData.products[0]._id}
         name={searchedData.products[0].name}
@@ -177,8 +177,6 @@ const Home = () => {
     )}
   </div>
 )}
-
-
           {/* No Products Message */}
           {!productLoading && searchedData?.products.length === 0 && (
             <div className="text-center py-12">
