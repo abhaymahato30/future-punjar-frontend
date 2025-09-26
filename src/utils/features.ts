@@ -53,8 +53,9 @@ export const getLastMonths = () => {
     last6Months,
   };
 };
-
-export const transformImage = (url: string, width = 200) => {
-  const newUrl = url.replace("upload/", `upload/dpr_auto/w_${width}/`);
-  return newUrl;
+export const transformImage = (url?: string, width = 200) => {
+  if (!url || typeof url !== "string") {
+    return "https://res.cloudinary.com/duzo8q4gg/image/upload/v1758711839/dryer_photo_1_1_m54mzb.jpg"; // fallback image
+  }
+  return url.replace("upload/", `upload/dpr_auto/w_${width}/`);
 };

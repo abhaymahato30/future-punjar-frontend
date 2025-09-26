@@ -3,7 +3,7 @@ import ProductCard from "../components/product-card";
 import { useSearchProductsQuery } from "../redux/api/productAPI";
 import { CustomError } from "../types/api-types";
 import toast from "react-hot-toast";
-// import { Skeleton } from "../components/loader";
+import { Skeleton } from "../components/loader";
 import { CartItem } from "../types/types";
 import { addToCart } from "../redux/reducer/cartReducer";
 import { useDispatch } from "react-redux";
@@ -49,7 +49,9 @@ const Home = () => {
       toast.error(err.data.message, TOAST_OPTIONS);
     }
   }, [productIsError, productError]);
-
+useEffect(() => {
+  console.log("Fetched products:", searchedData?.products);
+}, [searchedData]);
   return (
     <div className="product-list-page">
       {/* Hero Section */}
@@ -119,34 +121,36 @@ const Home = () => {
           </div>
 
           {/* Products Grid */}
-          {/* {productLoading ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {Array.from({ length: 8 }).map((_, i) => (
-                <div key={i} className="bg-white rounded-xl shadow-sm overflow-hidden">
-                  <Skeleton width="100%" height="200px" />
-                  <div className="p-4">
-                    <Skeleton width="80%" height="20px" />
-                    <Skeleton width="60%" height="16px" />
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {searchedData?.products.map((i) => (
-                <ProductCard
-                  key={i._id}
-                  productId={i._id}
-                  name={i.name}
-                  price={i.price}
-                  stock={i.stock}
-                  handler={addToCartHandler}
-                  photos={i.photos}
-                />
-              ))}
-            </div>
-          )} */}
-{productLoading ? (
+      {productLoading ? (
+  <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-1 xl:grid-cols-1 gap-6">
+    {Array.from({ length: 8 }).map((_, i) => (
+      <div key={i} className="bg-white rounded-xl shadow-sm overflow-hidden">
+        <Skeleton width="100%" height="200px" />
+        <div className="p-4">
+          <Skeleton width="80%" height="20px" />
+          <Skeleton width="60%" height="16px" />
+        </div>
+      </div>
+    ))}
+  </div>
+) : (
+  <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-1 xl:grid-cols-1 gap-6">
+    {searchedData?.products.map((product) => (
+      <ProductCard
+        key={product._id}
+        productId={product._id}
+        name={product.name}
+        price={product.price}
+        stock={product.stock}
+        handler={addToCartHandler}
+     photos={product.photos && product.photos.length > 0 ? product.photos : [{ url: "/fallback.jpg", public_id: "fallback" }]}
+
+      />
+    ))}
+  </div>
+)}
+
+{/* {productLoading ? (
   // ✅ Full-width loading skeleton for one product
   <div className="w-full flex justify-center items-center px-6">
     <div className="w-full max-w-6xl bg-white rounded-2xl shadow-md overflow-hidden animate-pulse">
@@ -176,7 +180,7 @@ const Home = () => {
       </p>
     )}
   </div>
-)}
+)} */}
           {/* No Products Message */}
           {!productLoading && searchedData?.products.length === 0 && (
             <div className="text-center py-12">
